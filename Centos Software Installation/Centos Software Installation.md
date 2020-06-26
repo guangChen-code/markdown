@@ -188,3 +188,28 @@ $ ln -s /usr/Python-3.6.5/bin/pip3 /usr/bin/pip3
 $ pip3 -V
 pip 9.0.3 from /usr/Python-3.6.5/lib/python3.6/site-packages (python 3.6)
 ```
+
+## git & tig
+
+1.Install using command line
+
+```shell
+yum -y install git
+yum -y install tig
+```
+
+2.Configure account information
+
+```shell
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"
+```
+
+3.Generate SSH key
+
+```shell
+ssh-keygen -t rsa -C "youremail@example.com"
+cat ~/.ssh/id_rsa.pub
+```
+
+4.GitHub configuration generated key
