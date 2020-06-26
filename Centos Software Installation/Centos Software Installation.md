@@ -118,3 +118,73 @@ bind -r C-h previous-window # select previous window
 bind -r C-l next-window     # select next window
 bind Tab last-window        # move to last active window
 ```
+
+## python3.6.5
+
+1.Python3.6.5 needs to be installed with some dependencies (if any dependency problems, follow the instructions)
+
+```shell
+yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel \
+sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel gcc
+```
+
+2.Download and unzip python3.6.5
+
+```shell
+$ cd /usr/
+$ wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz
+$ tar -xf Python-3.6.5.tar.xz
+$ ls
+Python-3.6.5  Python-3.6.5.tar.xz
+```
+
+3.Install python3.6.5
+
+```shell
+cd Python-3.6.5/
+./configure --prefix=/usr/Python-3.6.5
+make && make install
+```
+
+4.Have the system use the new version of python3.6.5
+Note: backup python2.7.5 or yum will not work
+
+```shell
+mv /usr/bin/python /usr/bin/python2.7.5
+ln -s /usr/Python-3.6.5/bin/python3.6 /usr/bin/python
+```
+
+New soft connection
+
+```shell
+$ python -V
+Python 3.6.5
+```
+
+5.Resolves yum's dependency on python2.7.5
+
+```shell
+vi /usr/bin/yum
+# Header of file
+!/usr/bin/python
+# Change to
+!/usr/bin/python2.7.5
+```
+
+Modify a related configuration file
+
+```shell
+vi  /usr/libexec/urlgrabber-ext-down
+# Header of file
+!/usr/bin/python
+# Change to
+!/usr/bin/python2.7.5
+```
+
+6.Configuration of pip
+
+```shell
+$ ln -s /usr/Python-3.6.5/bin/pip3 /usr/bin/pip3
+$ pip3 -V
+pip 9.0.3 from /usr/Python-3.6.5/lib/python3.6/site-packages (python 3.6)
+```
