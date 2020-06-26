@@ -388,3 +388,68 @@ call plug#end()
 vim
 :PlugInstall
 ```
+
+## docker
+
+1.Uninstall old versions
+
+```shell
+sudo yum remove docker \
+                docker-client \
+                docker-client-latest \
+                docker-common \
+                docker-latest \
+                docker-latest-logrotate \
+                docker-logrotate \
+                docker-engine
+```
+
+2.Set up the repository
+
+```shell
+sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+```
+
+Use official source address (slower)
+
+```shell
+sudo yum-config-manager \
+  --add-repo \
+  https://download.docker.com/linux/centos/docker-ce.repo
+```
+
+Aliyun
+
+```shell
+sudo yum-config-manager \
+  --add-repo \
+  http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+```
+
+3.Install docker engine
+
+```shell
+sudo yum install docker-ce docker-ce-cli containerd.io
+```
+
+4.Docker image acceleration
+
+```shell
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://dkuydkwf.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+5.Start up and set up since boot
+
+```shell
+systemctl start docker
+systemctl enable docker.service
+```
